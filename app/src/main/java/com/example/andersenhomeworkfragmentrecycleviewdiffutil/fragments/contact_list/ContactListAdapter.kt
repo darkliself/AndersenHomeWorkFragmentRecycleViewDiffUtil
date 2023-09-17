@@ -1,20 +1,30 @@
 package com.example.andersenhomeworkfragmentrecycleviewdiffutil.fragments.contact_list
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.andersenhomeworkfragmentrecycleviewdiffutil.R
+import com.example.andersenhomeworkfragmentrecycleviewdiffutil.databinding.ContactListItemBinding
+import com.example.andersenhomeworkfragmentrecycleviewdiffutil.fragments.FragmentViewModel
 import com.example.andersenhomeworkfragmentrecycleviewdiffutil.repository.Contact
 import com.example.andersenhomeworkfragmentrecycleviewdiffutil.repository.ContactsRepo
+import com.example.andersenhomeworkfragmentrecycleviewdiffutil.utl.DeviceType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class ContactListAdapter() :
+class ContactListAdapter(
+    context: Context
+) :
     RecyclerView.Adapter<ContactListAdapter.ContactListViewHolder>() {
-        var contactsList: List<Contact> = emptyList()
+    private val _context = context
+    var contactsList: List<Contact> = emptyList()
         set(newValue) {
             val diffCallback = ContactDiffUtil(field, newValue)
             val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -23,9 +33,9 @@ class ContactListAdapter() :
         }
 
     inner class ContactListViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val contactName = view.findViewById<TextView>(R.id.contact_name)
-        val image = view.findViewById<ImageView>(R.id.contact_avatar)
-        val layout = view.findViewById<View>(R.id.contact_avatar)
+        private val binding: ContactListItemBinding = ContactListItemBinding.bind(view)
+        val contactName = binding.contactName
+        val imageView = binding.contactAvatar
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactListViewHolder {
@@ -44,21 +54,28 @@ class ContactListAdapter() :
 
         val item = contactsList[position]
         holder.contactName.text = item.name
+
         holder.contactName.setOnClickListener {
-            val action = ContactListFragmentDirections.actionContactListFragmentToContactInfoFragment(contactIndex = position.toString())
-            holder.view.findNavController().navigate(action)
+            CoroutineScope(Dispatchers.Main).launch {
+                FragmentViewModel.setContactIndex(position)
+                if (DeviceType.isPhone) {
+                    navigateToContactInfoFragment(holder.view)
+                }
+            }
         }
         holder.contactName.setOnLongClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                FragmentViewModel.contactIndex.collect {
+                    if (it == position) {
+                        FragmentViewModel.setContactIndex(-1)
+                    }
+                }
+            }
             removeContact(item.id)
+            showToast()
             true
         }
-//        holder.layout.setOnClickListener {
-//            val action =
-//                ContactListFragmentDirections.actionContactListFragmentToContactInfoFragment(
-//                    contactIndex = position.toString()
-//                )
-//            holder.view.findNavController().navigate(action)
-//        }
+         holder.imageView.load(item.avatarUrl)
     }
 
     private fun removeContact(contactId: Int) {
@@ -69,8 +86,18 @@ class ContactListAdapter() :
     }
 
     fun search(query: String) {
-        val newList = ContactsRepo.contactsList.filter { it.name.lowercase().contains(query.lowercase()) }
+        val newList =
+            ContactsRepo.contactsList.filter { it.name.lowercase().contains(query.lowercase()) }
         contactsList = newList
+    }
+
+    private fun navigateToContactInfoFragment(view: View) {
+        val action =
+            ContactListFragmentDirections.actionContactListFragmentToContactInfoFragment()
+        view.findNavController().navigate(action)
+    }
+    private fun showToast() {
+        Toast.makeText(_context, _context.getString(R.string.delete_contact_message), Toast.LENGTH_LONG).show()
     }
 }
 

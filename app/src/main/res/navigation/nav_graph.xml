@@ -10,10 +10,6 @@
         android:name="com.example.andersenhomeworkfragmentrecycleviewdiffutil.fragments.contact_info.ContactInfoFragment"
         android:label="contact_info_view"
         tools:layout="@layout/fragment_contact_info" >
-        <argument
-            android:name="contact_index"
-            app:argType="string" />
-
     </fragment>
 
     <fragment

@@ -6,29 +6,36 @@
     tools:theme="@style/Base.CardView"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:layout_margin="10dp"
     android:orientation="horizontal"
-    android:clickable="true"
-    android:focusable="true"
-    >
+    android:gravity="center_vertical">
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="60dp"
+        android:layout_marginEnd="16dp"
+        >
+        <ImageView
+            android:id="@+id/contact_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="false"
+            android:focusable="false"
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/contact_hint"/>
+    </androidx.cardview.widget.CardView>
+
 
     <TextView
         android:id="@+id/contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="promt_text"
+        android:text="@string/contact_hint"
         android:layout_marginEnd="30dp"
+        android:textAlignment="center"
         android:clickable="false"
         android:focusable="false"
+        android:textSize="24sp"
         />
-    <ImageView
-        android:id="@+id/contact_avatar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:clickable="false"
-        android:focusable="false"
 
-        tools:srcCompat="@tools:sample/avatars" />
 
 </LinearLayout>

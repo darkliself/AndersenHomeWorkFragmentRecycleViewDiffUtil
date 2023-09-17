@@ -1,9 +1,8 @@
 package com.example.andersenhomeworkfragmentrecycleviewdiffutil.repository
 
+
 const val NUMBER_PREFIX = "+3806600000"
 const val RON_SWANSON_NAME = "Ron Swanson"
-const val RON_SWANSON_AVA =
-    "https://static.wikia.nocookie.net/deathbattlefanon/images/6/6b/Ron_Swanson.jpg/revision/latest/scale-to-width-down/180?cb=20200618120218"
 const val RON_SWANSON_ABOUT =
     "Ronald Ulysses Swanson is a fictional character portrayed by Nick Offerman in Parks and Recreation, a situational comedy television series. The character was created by Michael Schur and Greg Daniels with inspiration from a real-life Libertarian elected official. Offerman provided creative input, and aspects of his own personality were folded into the character. NBC was initially reluctant to cast Offerman in the role, despite the creators' intentions, until the network finally agreed five months later."
 const val ERIK_CARTMAN_NAME = "Erik Cartman"
@@ -20,7 +19,8 @@ const val RANDY_MARSH_ABOUT =
 const val SENSAI_NAME = "Sensai"
 const val SENSAI_ABOUT =
     "Sensai is an overweight martial arts instructor who teaches the fighting style of Death Kwon Do, using a notebook full of drawings as his technique book. He often reacts to bad news by shouting \"NOOOOO!\" He only appears with a few lines/quotes. In \"Death Kwon Do-Livery,\" he is revealed to have an apprentice, Jerry-San. He returned in the episode \"Sandwich of Death\" as the owner of Death Kwon Do Pizza and Subs"
-const val AVA_URL = "https://picsum.photos/200"
+const val AVA_URL = "https://picsum.photos/"
+const val AVA_ENDPOINT = 200
 
 
 class ContactsRepo {
@@ -35,17 +35,13 @@ class ContactsRepo {
             return contactsList[index]
         }
 
-        fun count(): Int {
-            return contactsList.size
-        }
-
         private fun fillContacts(index: Int): Contact {
             return if (index % 4 == 0) {
                 Contact(
                     id = index,
                     name = RON_SWANSON_NAME + index,
                     number = NUMBER_PREFIX + index,
-                    avatarUrl = RON_SWANSON_AVA,
+                    avatarUrl = AVA_URL + (AVA_ENDPOINT + index),
                     about = RON_SWANSON_ABOUT
                 )
             } else if (index % 3 == 0) {
@@ -53,7 +49,7 @@ class ContactsRepo {
                     id = index,
                     name = ERIK_CARTMAN_NAME + index,
                     number = NUMBER_PREFIX + index,
-                    avatarUrl = AVA_URL,
+                    avatarUrl = AVA_URL + (AVA_ENDPOINT + index),
                     about = ERIK_CARTMAN_ABOUT
                 )
             } else if (index % 2 == 0) {
@@ -61,7 +57,7 @@ class ContactsRepo {
                     id = index,
                     name = RANDY_MARSH_NAME + index,
                     number = NUMBER_PREFIX + index,
-                    avatarUrl = AVA_URL,
+                    avatarUrl = AVA_URL + (AVA_ENDPOINT + index),
                     about = RANDY_MARSH_ABOUT
                 )
             } else {
@@ -69,35 +65,11 @@ class ContactsRepo {
                     id = index,
                     name = SENSAI_NAME + index,
                     number = NUMBER_PREFIX + index,
-                    avatarUrl = AVA_URL,
+                    avatarUrl = AVA_URL + (AVA_ENDPOINT + index),
                     about = SENSAI_ABOUT
                 )
             }
 
         }
-
-        fun search(query: String): List<Contact> {
-            return if (query != "") {
-                contactsList.filter { it.name.lowercase().contains(query.lowercase()) }
-            } else {
-                contactsList
-            }
-        }
-
-        fun removeContact(contactId: Int) {
-            contactsList.removeIf { it.id == contactId }
-        }
-
     }
-
-
-//    fun findContact(name: String): Contact {
-//        contactsList.forEach {
-//            if (it.name == name) {
-//                return  it
-//            } else {
-//                return null
-//            }
-//        }
-//    }
 }
