@@ -5,11 +5,12 @@ const val NUMBER_PREFIX = "+3806600000"
 const val RON_SWANSON_NAME = "Ron Swanson"
 const val RON_SWANSON_ABOUT =
     "Ronald Ulysses Swanson is a fictional character portrayed by Nick Offerman in Parks and Recreation, a situational comedy television series. The character was created by Michael Schur and Greg Daniels with inspiration from a real-life Libertarian elected official. Offerman provided creative input, and aspects of his own personality were folded into the character. NBC was initially reluctant to cast Offerman in the role, despite the creators' intentions, until the network finally agreed five months later."
-const val ERIK_CARTMAN_NAME = "Erik Cartman"
-const val ERIK_CARTMAN_ABOUT =
-    "Eric Theodore Cartman, commonly referred to by his surname,[1] is a fictional character in the adult animated sitcom South Park, created by Trey Parker and Matt Stone. He is voiced by Parker, and is one of the series' four main characters, alongside Stan Marsh, Kyle Broflovski, and Kenny McCormick. He first appeared with the name Kenny in the short film The Spirit of Christmas (1992), and later appeared in the 1995 film of the same title before debuting in \"Cartman Gets an Anal Probe\", the first episode of the series, on August 13, 1997.\n" +
-            "\n" +
-            "Cartman is an elementary school student who lives with his single mother, Liane, in the eponymous Colorado town. Cartman is principally characterized by his obesity, his amorality, and his bigoted and especially antisemitic disposition, being described by Parker and Stone as \"a little Archie Bunker.\" In later seasons, particuarly following the fifth season episode \"Scott Tenorman Must Die\", Cartman exhibits increasingly sociopathic and manipulative behavior. The latter is showcased through Cartman's various schemes, the majority of which fail either due to opposition from other characters or Cartman's own hubris, frequently leaving Cartman in complete humiliation."
+const val RICK_SANCHEZ_NAME = "Rick Sanchez"
+const val RICK_SANCHEZ_ABOUT = "Richard Daniel \"Rick\" Sanchez is one of the two eponymous characters from the Adult Swim animated television series Rick and Morty and resulting franchise. Created by Justin Roiland and Dan Harmon, and voiced by the former in the first six seasons of the series and promotional media,[1] and Yōhei Tadano in Rick and Morty: The Anime, Sanchez is a misanthropic, alcoholic scientist inspired by Christopher Lloyd's Dr. Emmett \"Doc\" Brown from Back to the Future and Reed Richards / Mr. Fantastic from Marvel Comics. In September 2021, Lloyd portrayed Sanchez himself in a series of promotional interstitials for the series.[2][3]\n" +
+        "\n" +
+        "Known for his reckless, nihilistic behavior, pragmatic moral ambiguity and pessimistic personality, the character has been well received. Rick C-137 is a mad scientist who seems to know everything in the universe and thus finds life a traumatizing and pointless experience. Following the murder of his wife Diane and daughter Beth Sanchez in his native reality (C-137) by his parallel self Rick Prime, Rick dedicates his life to hunting Prime down, developing inter-dimensional travel and building a wall around the segment of the multiverse where Rick is \"The Smartest Man in the Universe\", dubbed the Central Finite Curve, to narrow his search, massacring countless alternate versions of himself in the process of hunting down Prime before resigning himself to failure, founding the Citadel of Ricks out of the survivors, and retiring to move in with the family of an adult version of Beth (Smith) from Prime's own native reality (whom Prime had abandoned when Beth was a teenager) out of the slim hope of Prime one day returning so Rick could complete his vendetta, consisting of his son-in-law Jerry and teenage grandchildren Summer and Morty Smith, going on a series of adventures with the latter, over the course of which events in the first and fifth seasons lead to Morty and Summer having two children of their own, Mortimer Junior and Naruto.\n" +
+        "\n" +
+        "The first three volumes of the Rick and Morty comic series follow the Rick and Morty of Dimension C-132 while most issues of subsequent volumes (following the \"Head-Space\" arc in which Rick C-132 is killed) follow the main Rick (C-137) and Morty (Prime) from the television series, with the final volume (\"The Rickoning\") and Rick and Morty Go to Hell following another alternate Rick (and Morty) identified as Devil Rick in the latter series, and featuring a Girl Rick designed after cosplayer Santana Maynard by series writer Kyle Starks;[5] the video game Pocket Mortys meanwhile follows the Rick and Morty of C-123.[6] The main character Rick of the franchise and their alternative selves have received a positive critical reception"
 
 const val RANDY_MARSH_NAME = "Randy Marsh"
 const val RANDY_MARSH_ABOUT =
@@ -47,10 +48,10 @@ class ContactsRepo {
             } else if (index % 3 == 0) {
                 Contact(
                     id = index,
-                    name = ERIK_CARTMAN_NAME + index,
+                    name = RICK_SANCHEZ_NAME + index,
                     number = NUMBER_PREFIX + index,
                     avatarUrl = AVA_URL + (AVA_ENDPOINT + index),
-                    about = ERIK_CARTMAN_ABOUT
+                    about = RICK_SANCHEZ_ABOUT
                 )
             } else if (index % 2 == 0) {
                 Contact(

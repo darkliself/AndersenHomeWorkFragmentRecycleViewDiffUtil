@@ -1,5 +1,6 @@
 package com.example.andersenhomeworkfragmentrecycleviewdiffutil.fragments.contact_list
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -51,10 +52,8 @@ class ContactListAdapter(
     }
 
     override fun onBindViewHolder(holder: ContactListViewHolder, position: Int) {
-
         val item = contactsList[position]
         holder.contactName.text = item.name
-
         holder.contactName.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 FragmentViewModel.setContactIndex(position)
@@ -64,18 +63,16 @@ class ContactListAdapter(
             }
         }
         holder.contactName.setOnLongClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                FragmentViewModel.contactIndex.collect {
-                    if (it == position) {
-                        FragmentViewModel.setContactIndex(-1)
-                    }
-                }
-            }
-            removeContact(item.id)
-            showToast()
+            removeContactDialog(item.id, position).show()
             true
         }
-         holder.imageView.load(item.avatarUrl)
+        holder.imageView.load(item.avatarUrl)
+    }
+
+    fun search(query: String) {
+        val newList =
+            ContactsRepo.contactsList.filter { it.name.lowercase().contains(query.lowercase()) }
+        contactsList = newList
     }
 
     private fun removeContact(contactId: Int) {
@@ -85,19 +82,40 @@ class ContactListAdapter(
         ContactsRepo.contactsList.removeIf { it.id == contactId }
     }
 
-    fun search(query: String) {
-        val newList =
-            ContactsRepo.contactsList.filter { it.name.lowercase().contains(query.lowercase()) }
-        contactsList = newList
-    }
-
     private fun navigateToContactInfoFragment(view: View) {
         val action =
             ContactListFragmentDirections.actionContactListFragmentToContactInfoFragment()
         view.findNavController().navigate(action)
     }
-    private fun showToast() {
-        Toast.makeText(_context, _context.getString(R.string.delete_contact_message), Toast.LENGTH_LONG).show()
+
+    private fun showToast(message: String) {
+        Toast.makeText(
+            _context,
+            message,
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun removeContactDialog(contactId: Int, position: Int): AlertDialog {
+        val builder = AlertDialog.Builder(_context)
+        builder.setMessage(R.string.dialog_message_question)
+        builder.setPositiveButton(
+            R.string.dialog_message_yes
+        ) { _, _ ->
+            CoroutineScope(Dispatchers.Main).launch {
+                FragmentViewModel.contactIndex.collect {
+                    if (it == position) {
+                        FragmentViewModel.setContactIndex(-1)
+                    }
+                }
+            }
+            removeContact(contactId)
+            showToast(_context.getString(R.string.dialog_toast_delete_message))
+        }
+        builder.setNegativeButton(
+            R.string.dialog_message_no
+        ) { _, _ -> showToast(_context.getString(R.string.dialog_toast_cancel_message)) }
+        return builder.create()
     }
 }
 
