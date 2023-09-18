@@ -5,6 +5,11 @@
     <string name="contact_name_hint">Contact name hint</string>
     <string name="number_hint">+380661001001</string>
     <string name="about_contact_hint">Chose a contact</string>
-    <string name="delete_contact_message">Contact was deleted</string>
+    <string name="dialog_toast_delete_message">Contact was deleted</string>
     <string name="contact_hint">David Wong</string>
+    <string name="dialog_message_question">Remove a contact?</string>
+    <string name="dialog_message_yes">Yes</string>
+    <string name="dialog_message_no">No</string>
+    <string name="dialog_toast_cancel_message">Canceled</string>
+
 </resources>
